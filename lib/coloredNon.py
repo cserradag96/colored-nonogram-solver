@@ -17,6 +17,7 @@
 # DEPENDENCIES:
 #######################################################################################################################
 
+import sys
 from utils import *
 from row import Row
 from column import Column

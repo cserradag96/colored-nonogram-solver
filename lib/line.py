@@ -87,7 +87,7 @@ class Line:
         for i in range(len(self.groups) - 1):
             for first in range(self.startLimit(self.groups[i]) + 1):
                 for second in range(self.startLimit(self.groups[i + 1]) + 1):
-                    eqColor = self.groups[i].color.name == self.groups[i + 1].color.name
+                    eqColor = self.groups[i].color == self.groups[i + 1].color
                     length0 = second < first + len(self.groups[i]) + 1
                     length1 = second < first + len(self.groups[i])
 
