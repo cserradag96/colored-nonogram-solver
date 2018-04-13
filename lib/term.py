@@ -18,16 +18,15 @@
 #######################################################################################################################
 
 class Term:
-    def __init__(self, name, color, negative = False):
+    def __init__(self, name, negative=False):
         self.name = name
-        self.color = color
         self.negative = negative
 
     def __str__(self):
         return ("-" if self.negative else "") + self.name
 
     def __neg__(self):
-        return Term(self.name, self.color, not self.negative)
+        return Term(self.name, not self.negative)
 
 #######################################################################################################################
 # :)

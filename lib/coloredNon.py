@@ -27,12 +27,13 @@ from cnf import CNF
 #######################################################################################################################
 
 class ColoredNon:
-    def __init__(self, rows, columns):
-        self.rows    = rows
+    def __init__(self, colors, rows, columns):
+        self.colors = colors
+        self.rows = rows
         self.columns = columns
-        self.height  = len(self.rows)
-        self.width   = len(self.columns)
-        self.cnf     = self.genCNF()
+        self.height = len(self.rows)
+        self.width = len(self.columns)
+        self.cnf = self.genCNF()
 
     def genCNF(self):
         expression = CNF()

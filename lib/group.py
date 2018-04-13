@@ -22,6 +22,9 @@ class Group:
         self.length = length
         self.color = color
 
+    def __len__(self):
+        return self.length
+
     def __str__(self):
         return str(self.length) + ":" + str(self.color)
 

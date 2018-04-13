@@ -39,10 +39,8 @@ from coloredNon import *  # Colored nonogram module
 if __name__ == "__main__":
     file_path = sys.argv[1]
 
-    readNon(file_path)
-
-    """printStatus("Generando CNF")
-    puzzle = Nonogram(*readNon(file_path))
+    printStatus("Generando CNF")
+    puzzle = ColoredNon(*readNon(file_path))
 
     printStatus("Guardando CNF")
     writeFile(puzzle.cnf, "input.txt")
@@ -51,7 +49,7 @@ if __name__ == "__main__":
     minisat("input.txt", "output.txt")
 
     printStatus("Generando imagen")
-    writeFile(puzzle.genBitmap("output.txt"), namePBM(file_path))"""
+    writeFile(puzzle.genBitmap("output.txt"), namePBM(file_path))
 
 #######################################################################################################################
 # :)

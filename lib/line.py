@@ -26,43 +26,44 @@ from clause import Clause
 
 class Line:
     index = 0
-    def __init__(self, length, groups = []):
+
+    def __init__(self, length, groups=[]):
         self.length = length
         self.groups = groups
-        self.index  = self.__class__.index
+        self.index = self.__class__.index
 
         self.__class__.index += 1
 
-    def startLimit(self, groupSize):
-        return self.length - groupSize
+    def startLimit(self, group):
+        return self.length - len(group)
 
     def addClauses(self, expression):
         self.groupsStart(expression)           # Los grupos deben comenzar en alguna parte
-        self.groupDosentDuplicate(expression)  # Los grupos no deben tener duplicados
-        self.groupToCell(expression)           #
-        self.cellToGroup(expression)           #
-        self.groupOrder(expression)            #
+        self.groupDosentDuplicate(expression)  # Los grupos solo deben empezar una vez
+        self.groupToCell(expression)           # El grupo implica que las celdas que contienen estan coloreadas
+        self.cellToGroup(expression)           # Una celda esta coloreada solo si esta en un grupo
+        self.groupOrder(expression)            # Mantener orden de los grupos
 
     def groupsStart(self, expression):
-        for index, size in enumerate(self.groups):
+        for index, group in enumerate(self.groups):
             terms = []
-            for start in range(self.startLimit(size) + 1):
+            for start in range(self.startLimit(group) + 1):
                 terms.append(Term(self.groupStartName(index, start)))
             expression.add(Clause(terms))
 
     def groupDosentDuplicate(self, expression):
-        for index, size in enumerate(self.groups):
-            for pos in range(self.startLimit(size) + 1):
-                for nextPos in range(pos + 1, self.startLimit(size) + 1):
+        for index, group in enumerate(self.groups):
+            for pos in range(self.startLimit(group) + 1):
+                for nextPos in range(pos + 1, self.startLimit(group) + 1):
                     terms = []
                     terms.append(-Term(self.groupStartName(index, pos)))
                     terms.append(-Term(self.groupStartName(index, nextPos)))
                     expression.add(Clause(terms))
 
     def groupToCell(self, expression):
-        for index, size in enumerate(self.groups):
-            for start in range(self.startLimit(size) + 1):
-                for i in range(size):
+        for index, group in enumerate(self.groups):
+            for start in range(self.startLimit(group) + 1):
+                for i in range(len(group)):
                     terms = []
                     terms.append(-Term(self.groupStartName(index, start)))
                     terms.append(Term(self.cellName(start + i)))
@@ -75,7 +76,7 @@ class Line:
 
             for index, group in enumerate(self.groups):
                 for position in range(min(self.startLimit(group), cell) + 1):
-                    if (position + group > cell):
+                    if (position + len(group) > cell):
                         terms.append(Term(self.groupStartName(index, position)))
 
             expression.add(Clause(terms))
@@ -86,7 +87,7 @@ class Line:
         for i in range(len(self.groups) - 1):
             for first in range(self.startLimit(self.groups[i]) + 1):
                 for second in range(self.startLimit(self.groups[i + 1]) + 1):
-                    if (second < first + self.groups[i] + 1):
+                    if (second < first + len(self.groups[i]) + 1):
                         terms = []
                         terms.append(-Term(self.groupStartName(i, first)))
                         terms.append(-Term(self.groupStartName(i + 1, second)))

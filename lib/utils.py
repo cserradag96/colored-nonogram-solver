@@ -42,23 +42,23 @@ def readNon(file_path):
             colors.append(color)
 
         for i in range(h):
+            groups = []
             for group in file.readline().split(","):
                 group = group.split(":")
-                rows.append(Row(w, [Group(int(group[0]), colorsMap[group[1].strip()])]))
+                groups.append(Group(int(group[0]), colorsMap[group[1].strip()]))
+            rows.append(Row(w, groups))
 
         for i in range(w):
+            groups = []
             for group in file.readline().split(","):
                 group = group.split(":")
-                columns.append(Column(h, [Group(int(group[0]), colorsMap[group[1].strip()])]))
+                groups.append(Group(int(group[0]), colorsMap[group[1].strip()]))
+            columns.append(Column(h, groups))
 
-        for color in colors:
-            print(color)
-
-        for row in rows:
+        for row in columns:
             print(row)
-
-        for column in columns:
-            print(column)
+            for group in row.groups:
+                print(group)
 
     return colors, rows, columns
 
@@ -98,7 +98,7 @@ def printStatus(status):
 
 # Extract name from file_path and add pbm format
 def namePBM(file_path):
-    return basename(file_path)[:-4] + ".pbm"
+    return basename(file_path).replace(".cnon", ".pbm")
 
 #######################################################################################################################
 # :)
