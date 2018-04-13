@@ -49,7 +49,7 @@ if __name__ == "__main__":
     minisat("input.txt", "output.txt")
 
     printStatus("Generando imagen")
-    puzzle.genSVG("output.txt")
+    puzzle.genSVG("output.txt", file_path)
 
 #######################################################################################################################
 # :)

@@ -52,8 +52,8 @@ class ColoredNon:
 
         return [[variables[varId(i, j)] for j in range(self.width)] for i in range(self.height)]
 
-    def genSVG(self, output_path):
-        bitmap = [[x for x in row] for row in self.solve(output_path)]
+    def genSVG(self, solution_path, save_path):
+        bitmap = [[x for x in row] for row in self.solve(solution_path)]
 
         for i, row in enumerate(self.rows):
             start = 0
@@ -67,7 +67,7 @@ class ColoredNon:
                             start = k + 1
                             break
 
-        writeSVG(self.width, self.height, bitmap, nameSVG(output_path))
+        writeSVG(self.width, self.height, bitmap, nameSVG(save_path))
 
 #######################################################################################################################
 # :)
