@@ -27,8 +27,7 @@ from cnf import CNF
 #######################################################################################################################
 
 class ColoredNon:
-    def __init__(self, colors, rows, columns):
-        self.colors = colors
+    def __init__(self, rows, columns):
         self.rows = rows
         self.columns = columns
         self.height = len(self.rows)
@@ -37,8 +36,11 @@ class ColoredNon:
 
     def genCNF(self):
         expression = CNF()
-        for row in self.rows: row.addClauses(expression)
-        for column in self.columns: column.addClauses(expression)
+        for row in self.rows:
+            row.addClauses(expression)
+
+        for column in self.columns:
+            column.addClauses(expression)
 
         return expression
 
@@ -50,12 +52,7 @@ class ColoredNon:
 
         return [[variables[varId(i, j)] for j in range(self.width)] for i in range(self.height)]
 
-    def genBitmap(self, output_path):
-        header = "P1\n" + str(self.width) + " " + str(self.height) + "\n"
-        bitmap = self.paint(output_path)
-        return header + bitmap + "\n"
-
-    def paint(self, output_path):
+    def genSVG(self, output_path):
         bitmap = [[x for x in row] for row in self.solve(output_path)]
 
         for i, row in enumerate(self.rows):
@@ -64,18 +61,13 @@ class ColoredNon:
                 painted = 0
                 for k in range(start, self.width):
                     if bitmap[i][k]:
-                        bitmap[i][k] = group.color
+                        bitmap[i][k] = group.color.value
                         painted += 1
                         if painted == len(group):
                             start = k + 1
                             break
 
-        for i in range(self.height):
-            for j in range(self.width):
-                if not bitmap[i][j]:
-                    bitmap[i][j] = "W"
-
-        return "\n".join([" ".join([str(x) for x in row]) for row in bitmap])
+        writeSVG(self.width, self.height, bitmap, nameSVG(output_path))
 
 #######################################################################################################################
 # :)
