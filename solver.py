@@ -39,6 +39,8 @@ from coloredNon import *  # Colored nonogram module
 if __name__ == "__main__":
     file_path = sys.argv[1]
 
+    readNon(file_path)
+
     """printStatus("Generando CNF")
     puzzle = Nonogram(*readNon(file_path))
 

@@ -17,6 +17,8 @@
 # DEPENDENCIES:
 #######################################################################################################################
 
+from group import Group
+from color import Color
 from row import Row
 from column import Column
 from subprocess import Popen, PIPE, STDOUT
@@ -28,19 +30,35 @@ from os.path import basename
 
 # Read a file.non
 def readNon(file_path):
-    colors, rows, columns = {}, [], []
+    colors, rows, columns = [], [], []
     with open(file_path) as file:
-        c, w, h = list(map(int, file.readline().split(",")))
+        c, w, h = list(map(int, file.readline().split(" ")))
 
+        colorsMap = {}
+        colors.append(Color("W", "#FFFFFF"))
         for i in range(c):
-            key, value = list(map(strip, file.readline().split(",")))
-            colors[key] = value
+            color = Color(*file.readline().split(" "))
+            colorsMap[color.name] = color
+            colors.append(color)
 
         for i in range(h):
-            rows.append(Row(w, [x for x in file.readline().split(",")]))
+            for group in file.readline().split(","):
+                group = group.split(":")
+                rows.append(Row(w, [Group(int(group[0]), colorsMap[group[1].strip()])]))
 
         for i in range(w):
-            columns.append(Column(h, [x for x in file.readline().split(",")]))
+            for group in file.readline().split(","):
+                group = group.split(":")
+                columns.append(Column(h, [Group(int(group[0]), colorsMap[group[1].strip()])]))
+
+        for color in colors:
+            print(color)
+
+        for row in rows:
+            print(row)
+
+        for column in columns:
+            print(column)
 
     return colors, rows, columns
 
