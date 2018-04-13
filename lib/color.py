@@ -27,9 +27,6 @@ class Color:
 
         self.__class__.index += 1
 
-    def __repr__(self):
-        return "Color " + str(self.index) + ": " + str(self.name) + " " + str(self.value)
-
     def __str__(self):
         return self.name
 

@@ -85,14 +85,17 @@ class Line:
         if (len(self.groups) < 2): return
 
         for i in range(len(self.groups) - 1):
-            if self.groups[i].color == self.groups[i + 1].color:
-                for first in range(self.startLimit(self.groups[i]) + 1):
-                    for second in range(self.startLimit(self.groups[i + 1]) + 1):
-                        if (second < first + len(self.groups[i]) + 1):
-                            terms = []
-                            terms.append(-Term(self.groupStartName(i, first)))
-                            terms.append(-Term(self.groupStartName(i + 1, second)))
-                            expression.add(Clause(terms))
+            for first in range(self.startLimit(self.groups[i]) + 1):
+                for second in range(self.startLimit(self.groups[i + 1]) + 1):
+                    eqColor = self.groups[i].color == self.groups[i + 1].color
+                    length0 = second < first + len(self.groups[i]) + 1
+                    length1 = second < first + len(self.groups[i])
+
+                    if (eqColor and length0) or (not eqColor and length1):
+                        terms = []
+                        terms.append(-Term(self.groupStartName(i, first)))
+                        terms.append(-Term(self.groupStartName(i + 1, second)))
+                        expression.add(Clause(terms))
 
 #######################################################################################################################
 # :)

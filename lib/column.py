@@ -24,14 +24,14 @@ from line import Line
 #######################################################################################################################
 
 class Column(Line):
-    def __init__(self, length, groups = []):
+    def __init__(self, length, groups=[]):
         super(Column, self).__init__(length, groups)
 
     def groupStartName(self, group, start):
-        return "c" + str(self.index) + "b" + str(group) + "s" + str(start);
+        return "c" + str(self.index) + "b" + str(group) + "s" + str(start)
 
     def cellName(self, cell):
-        return "r" + str(cell) + "c" + str(self.index);
+        return "r" + str(cell) + "c" + str(self.index)
 
 #######################################################################################################################
 # :)

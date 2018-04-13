@@ -52,8 +52,30 @@ class ColoredNon:
 
     def genBitmap(self, output_path):
         header = "P1\n" + str(self.width) + " " + str(self.height) + "\n"
-        bitmap = "\n".join([" ".join([boolToBits(x) for x in row]) for row in self.solve(output_path)])
+        bitmap = self.paint(output_path)
         return header + bitmap + "\n"
+
+    def paint(self, output_path):
+        bitmap = [[x for x in row] for row in self.solve(output_path)]
+
+        for i, row in enumerate(self.rows):
+            start = 0
+            for group in row.groups:
+                painted = 0
+                for k in range(start, self.width):
+                    if bitmap[i][k]:
+                        bitmap[i][k] = group.color
+                        painted += 1
+                        if painted == len(group):
+                            start = k + 1
+                            break
+
+        for i in range(self.height):
+            for j in range(self.width):
+                if not bitmap[i][j]:
+                    bitmap[i][j] = "W"
+
+        return "\n".join([" ".join([str(x) for x in row]) for row in bitmap])
 
 #######################################################################################################################
 # :)
