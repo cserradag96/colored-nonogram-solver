@@ -26,7 +26,7 @@ from cnf import CNF
 # CLASS DECLARATION:
 #######################################################################################################################
 
-class Nonogram:
+class ColoredNon:
     def __init__(self, rows, columns):
         self.rows    = rows
         self.columns = columns

@@ -28,18 +28,21 @@ from os.path import basename
 
 # Read a file.non
 def readNon(file_path):
-    readR, readC = False, False
-    rows, columns = [], []
+    colors, rows, columns = {}, [], []
     with open(file_path) as file:
-        for line in file:
-            if readC and len(columns) < width: columns.append(Column(height, [int(x) for x in line.split(",")]))
-            elif readR and len(rows) < height: rows.append(Row(width, [int(x) for x in line.split(",")]))
-            elif line.find("columns") >= 0: readC = True
-            elif line.find("rows") >= 0: readR = True
-            elif line.find("height ") >= 0: height = int(line.replace("height ", ""))
-            elif line.find("width ") >= 0: width = int(line.replace("width ", ""))
+        c, w, h = list(map(int, file.readline().split(",")))
 
-    return rows, columns
+        for i in range(c):
+            key, value = list(map(strip, file.readline().split(",")))
+            colors[key] = value
+
+        for i in range(h):
+            rows.append(Row(w, [x for x in file.readline().split(",")]))
+
+        for i in range(w):
+            columns.append(Column(h, [x for x in file.readline().split(",")]))
+
+    return colors, rows, columns
 
 # Write content into file
 def writeFile(content, file_path):
