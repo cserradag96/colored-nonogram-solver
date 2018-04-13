@@ -35,7 +35,6 @@ def readNon(file_path):
         c, w, h = list(map(int, file.readline().split(" ")))
 
         colorsMap = {}
-        colors.append(Color("W", "#FFFFFF"))
         for i in range(c):
             color = Color(*file.readline().split(" "))
             colorsMap[color.name] = color
@@ -54,11 +53,6 @@ def readNon(file_path):
                 group = group.split(":")
                 groups.append(Group(int(group[0]), colorsMap[group[1].strip()]))
             columns.append(Column(h, groups))
-
-        for row in columns:
-            print(row)
-            for group in row.groups:
-                print(group)
 
     return colors, rows, columns
 
