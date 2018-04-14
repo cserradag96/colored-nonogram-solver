@@ -109,6 +109,8 @@ variables que representan celdas del puzzle y se construye una matriz de booleno
 Con la matriz resultado de la decodificación de la solución y la información almacenada del problema (vaor de los colores), se renderiza la solución como una imagen vectorial con formato `.svg` mediante la libreria `svgwrite`.
 
 ## Estado del proyecto
-
 No siempre encuentra la solución correcta. Faltan agregar y reforzar las reglas.
+
+
+<img src="https://raw.githubusercontent.com/cserradag96/colored-nonogram-solver/master/solutions/0.svg?sanitize=true" width="500" height="270">
 
