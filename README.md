@@ -16,6 +16,30 @@ Que coresponde a la siguiente formula:
 
 Se diseño un formato para representar facilmente la especificación de un nonograma de color. El formato consiste en una primera linea con tres números representando la cantidad de colores C, el ancho W y el alto H del tablero respectivamente. A continuación se presentan C lineas con el nombre del color y su valor en hexadecimal separados por un espacio.  Luego H lineas con los bloques presentes en cada fila, separados por espacios. Analogamente las siguiente W lineas contienen los bloques presentes en cada columna. Los bloques son especificados mediante un número que indica la cantidad de celdas que componen el bloque, seguido por el nombre del color del bloque, separados mediante dos puntos.
 
+## Instalación
+
+- Instalar svgwrite
+
+```
+pip install svgwrite
+```
+
+- Compilar MiniSAT
+
+```
+cd minisat
+export MROOT=$(pwd)
+cd core
+sudo apt-get install libghc-zlib-dev
+make
+```
+
+## Ejecución
+
+```
+python3 solver.py <file.cnon>
+```
+
 ## Codificación
 
 Para representar los nonogramas como CFN consideramos dos tipos de términos:
@@ -82,8 +106,9 @@ variables que representan celdas del puzzle y se construye una matriz de booleno
 
 ## Generación de la imagen
 
-Se toma la matriz solución obtenida de la decodificación, y se genera un archivo en formato pbm, agregando un header\
- que contiene una palabra magica, las dimensiones de la imagen, y los valores contenidos en la matriz, parciados a\
- 0s y 1s separados por espacios. La imagen resultante lleva el mismo nombre del archivo non del que fue generado\
- pero con la extension pbm.
+Con la matriz resultado de la decodificación de la solución y la información almacenada del problema (vaor de los colores), se renderiza la solución como una imagen vectorial con formato `.svg` mediante la libreria `svgwrite`.
+
+## Estado del proyecto
+
+No siempre encuentra la solución correcta. Faltan agregar y reforzar las reglas.
 
